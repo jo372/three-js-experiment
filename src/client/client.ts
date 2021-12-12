@@ -1,5 +1,7 @@
 import * as THREE from 'three'
+import { Object3D } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import GrassBlock from './meshes/grass/GrassBlock'
 
 const scene = new THREE.Scene()
 
@@ -12,14 +14,14 @@ document.body.appendChild(renderer.domElement)
 
 const controls = new OrbitControls(camera, renderer.domElement)
 
-const geometry = new THREE.BoxGeometry()
-const material = new THREE.MeshBasicMaterial({
-    color: 0x00ff00,
-    wireframe: true,
-})
-
-const cube = new THREE.Mesh(geometry, material)
-scene.add(cube)
+for(let x=0; x < 10; x++) {
+    for(let y=0; y < 10; y++) {
+        const block = new GrassBlock({
+            position: new THREE.Vector3(x, y, 0),
+        });
+        scene.add(block.mesh);
+    }
+}
 
 window.addEventListener('resize', onWindowResize, false)
 function onWindowResize() {
@@ -31,12 +33,7 @@ function onWindowResize() {
 
 function animate() {
     requestAnimationFrame(animate)
-
-    cube.rotation.x += 0.01
-    cube.rotation.y += 0.01
-
     controls.update()
-
     render()
 }
 
