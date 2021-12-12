@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { Object3D } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import GrassBlock from './meshes/grass/GrassBlock'
+import StoneBlock from './meshes/stone/StoneBlock'
 
 const scene = new THREE.Scene()
 
@@ -14,12 +15,13 @@ document.body.appendChild(renderer.domElement)
 
 const controls = new OrbitControls(camera, renderer.domElement)
 
-for(let x=0; x < 10; x++) {
-    for(let y=0; y < 10; y++) {
-        const block = new GrassBlock({
-            position: new THREE.Vector3(x, 0, y),
-        });
-        scene.add(block.mesh);
+for(let bid=0; bid < 2; bid++) {
+    for(let x=0; x < 10; x++) {
+        for(let y=0; y < 10; y++) {
+            const position = new THREE.Vector3(x, bid, y);
+            const block = bid === 0 ? new StoneBlock({position}) : new GrassBlock({position});
+            scene.add(block.mesh);
+        }
     }
 }
 
