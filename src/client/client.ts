@@ -17,7 +17,7 @@ const controls = new OrbitControls(camera, renderer.domElement)
 for(let x=0; x < 10; x++) {
     for(let y=0; y < 10; y++) {
         const block = new GrassBlock({
-            position: new THREE.Vector3(x, y, 0),
+            position: new THREE.Vector3(x, 0, y),
         });
         scene.add(block.mesh);
     }
