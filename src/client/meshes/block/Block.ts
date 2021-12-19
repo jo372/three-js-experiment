@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import GlobalLoader from '../../lib/loader/GlobalLoader';
 
 export interface BlockParams {
     position?: THREE.Vector3,
@@ -10,7 +11,8 @@ export interface BlockParams {
 
 abstract class Block {
     protected readonly _mesh : THREE.Mesh;
-    protected readonly _loader = new THREE.TextureLoader();
+    protected readonly _loader = GlobalLoader;
+
     constructor(params: BlockParams) {
         const position = params.position || new THREE.Vector3(0, 0, 0);
         const material = params.material || new THREE.MeshBasicMaterial({color: 0x00ff00});
@@ -22,6 +24,8 @@ abstract class Block {
         
         const mesh = new THREE.Mesh(geometry, material);
         mesh.position.copy(position);
+        mesh.userData['originalPosition'] = position;
+        mesh.userData['type'] = 'block';
         this._mesh = mesh;
     }
     public get mesh() {
